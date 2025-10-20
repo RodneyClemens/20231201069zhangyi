@@ -1,0 +1,336 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS动画类型</title>
+    <style>
+        /* 基础样式 */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 导航样式 */
+        .nav {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 页面标题动画 */
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            animation-name: slideDown;
+            animation-duration: 0.8s;
+            animation-fill-mode: forwards;
+        }
+        
+        /* 动画展示容器 */
+        .animation-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .animation-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .animation-card h3 {
+            color: #007bff;
+            margin-top: 0;
+        }
+        
+        .animation-preview {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 15px 0;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .code-block {
+            background-color: #f1f3f4;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        
+        /* 1. 缩放动画 */
+        @keyframes scale {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .scale-box {
+            width: 80px;
+            height: 80px;
+            background-color: #e74c3c;
+            animation-name: scale;
+            animation-duration: 1.5s;
+            animation-fill-mode: forwards;
+            animation-iteration-count: infinite;
+            animation-direction: alternate;
+        }
+        
+        /* 2. 旋转动画 */
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .rotate-box {
+            width: 80px;
+            height: 80px;
+            background-color: #3498db;
+            animation-name: rotate;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+        }
+        
+        /* 3. 弹跳动画 */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-30px); }
+            60% { transform: translateY(-15px); }
+        }
+        
+        .bounce-box {
+            width: 80px;
+            height: 80px;
+            background-color: #2ecc71;
+            animation-name: bounce;
+            animation-duration: 1.5s;
+            animation-iteration-count: infinite;
+        }
+        
+        /* 4. 颜色变化动画 */
+        @keyframes colorChange {
+            0% { background-color: #9b59b6; }
+            50% { background-color: #f39c12; }
+            100% { background-color: #9b59b6; }
+        }
+        
+        .color-box {
+            width: 80px;
+            height: 80px;
+            background-color: #9b59b6;
+            animation-name: colorChange;
+            animation-duration: 3s;
+            animation-iteration-count: infinite;
+        }
+        
+        /* 5. 呼吸动画 */
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+        
+        .breathe-box {
+            width: 80px;
+            height: 80px;
+            background-color: #1abc9c;
+            border-radius: 50%;
+            animation-name: breathe;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+        }
+        
+        /* 6. 脉冲动画 */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255, 105, 180, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0); }
+        }
+        
+        .pulse-box {
+            width: 80px;
+            height: 80px;
+            background-color: #ff69b4;
+            border-radius: 50%;
+            animation-name: pulse;
+            animation-duration: 2s;
+            animation-iteration-count: infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <div class="nav">
+        <a href="/animations/">主页</a>
+        <a href="/animations/types">动画类型</a>
+        <a href="/animations/interactive">交互动画</a>
+    </div>
+    
+    <!-- 页面标题 -->
+    <h1>CSS动画类型展示</h1>
+    
+    <!-- 动画展示容器 -->
+    <div class="animation-container">
+        <!-- 1. 缩放动画 -->
+        <div class="animation-card">
+            <h3>缩放动画</h3>
+            <p>使元素放大和缩小，创造出动态效果。</p>
+            <div class="animation-preview">
+                <div class="scale-box"></div>
+            </div>
+            <div class="code-block">@keyframes scale {
+    0% { transform: scale(0.5); opacity: 0; }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.scale-box {
+    animation-name: scale;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}</div>
+        </div>
+        
+        <!-- 2. 旋转动画 -->
+        <div class="animation-card">
+            <h3>旋转动画</h3>
+            <p>使元素围绕中心点旋转。</p>
+            <div class="animation-preview">
+                <div class="rotate-box"></div>
+            </div>
+            <div class="code-block">@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.rotate-box {
+    animation-name: rotate;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}</div>
+        </div>
+        
+        <!-- 3. 弹跳动画 -->
+        <div class="animation-card">
+            <h3>弹跳动画</h3>
+            <p>模拟物体弹跳的物理效果。</p>
+            <div class="animation-preview">
+                <div class="bounce-box"></div>
+            </div>
+            <div class="code-block">@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-30px); }
+    60% { transform: translateY(-15px); }
+}
+
+.bounce-box {
+    animation-name: bounce;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+}</div>
+        </div>
+        
+        <!-- 4. 颜色变化动画 -->
+        <div class="animation-card">
+            <h3>颜色变化动画</h3>
+            <p>平滑过渡元素的背景颜色。</p>
+            <div class="animation-preview">
+                <div class="color-box"></div>
+            </div>
+            <div class="code-block">@keyframes colorChange {
+    0% { background-color: #9b59b6; }
+    50% { background-color: #f39c12; }
+    100% { background-color: #9b59b6; }
+}
+
+.color-box {
+    animation-name: colorChange;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+}</div>
+        </div>
+        
+        <!-- 5. 呼吸动画 -->
+        <div class="animation-card">
+            <h3>呼吸动画</h3>
+            <p>模拟呼吸效果，缓慢缩放和改变透明度。</p>
+            <div class="animation-preview">
+                <div class="breathe-box"></div>
+            </div>
+            <div class="code-block">@keyframes breathe {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.7; }
+}
+
+.breathe-box {
+    border-radius: 50%;
+    animation-name: breathe;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}</div>
+        </div>
+        
+        <!-- 6. 脉冲动画 -->
+        <div class="animation-card">
+            <h3>脉冲动画</h3>
+            <p>创建向外扩散的脉冲效果，常用于通知或强调。</p>
+            <div class="animation-preview">
+                <div class="pulse-box"></div>
+            </div>
+            <div class="code-block">@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.7); }
+    70% { box-shadow: 0 0 0 15px rgba(255, 105, 180, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0); }
+}
+
+.pulse-box {
+    border-radius: 50%;
+    animation-name: pulse;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}</div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,353 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>交互动画演示</title>
+    <style>
+        /* 基础样式 */
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* 导航样式 */
+        .nav {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+        .nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        
+        /* 页面标题 */
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        
+        /* 动画容器 */
+        .interactive-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .interactive-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .interactive-card h3 {
+            color: #007bff;
+            margin-top: 0;
+        }
+        
+        .interaction-area {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 15px 0;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* 1. 点击动画 */
+        .click-box {
+            width: 100px;
+            height: 100px;
+            background-color: #3498db;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: transform 0.1s;
+        }
+        
+        .click-box:active {
+            transform: scale(0.95);
+        }
+        
+        .click-box.clicked {
+            animation: clickAnimation 0.3s ease-out;
+        }
+        
+        @keyframes clickAnimation {
+            0% { transform: scale(0.95); }
+            50% { transform: scale(1.1); background-color: #2ecc71; }
+            100% { transform: scale(1); background-color: #3498db; }
+        }
+        
+        /* 2. 悬停动画 */
+        .hover-box {
+            width: 100px;
+            height: 100px;
+            background-color: #e74c3c;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .hover-box:hover {
+            transform: scale(1.1) rotate(5deg);
+            background-color: #9b59b6;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        /* 3. 拖动动画 */
+        .drag-box {
+            width: 80px;
+            height: 80px;
+            background-color: #f39c12;
+            border-radius: 50%;
+            position: relative;
+            cursor: grab;
+            user-select: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .drag-box:active {
+            cursor: grabbing;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        /* 4. 滚动触发动画 */
+        .scroll-animation {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            padding: 20px;
+            background-color: #1abc9c;
+            color: white;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+        
+        .scroll-animation.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 5. 键盘动画 */
+        .keyboard-box {
+            width: 120px;
+            height: 120px;
+            background-color: #34495e;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+        
+        .keyboard-box.active {
+            animation: keyboardPress 0.3s ease;
+        }
+        
+        @keyframes keyboardPress {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.9); background-color: #2c3e50; }
+            100% { transform: scale(1); }
+        }
+        
+        /* 6. 渐变背景动画 */
+        .gradient-box {
+            width: 200px;
+            height: 100px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            border-radius: 8px;
+            transition: background 1s ease;
+        }
+        
+        .gradient-box:hover {
+            background: linear-gradient(45deg, #1dd1a1, #54a0ff);
+        }
+        
+        /* 说明文本 */
+        .instruction {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <div class="nav">
+        <a href="/animations/">主页</a>
+        <a href="/animations/types">动画类型</a>
+        <a href="/animations/interactive">交互动画</a>
+    </div>
+    
+    <!-- 页面标题 -->
+    <h1>交互动画演示</h1>
+    
+    <!-- 交互动画容器 -->
+    <div class="interactive-container">
+        <!-- 1. 点击动画 -->
+        <div class="interactive-card">
+            <h3>点击动画</h3>
+            <div class="interaction-area">
+                <div class="click-box" id="clickBox">点击我</div>
+                <p class="instruction">点击方块查看动画效果</p>
+            </div>
+        </div>
+        
+        <!-- 2. 悬停动画 -->
+        <div class="interactive-card">
+            <h3>悬停动画</h3>
+            <div class="interaction-area">
+                <div class="hover-box"></div>
+                <p class="instruction">将鼠标悬停在方块上</p>
+            </div>
+        </div>
+        
+        <!-- 3. 拖动动画 -->
+        <div class="interactive-card">
+            <h3>拖动动画</h3>
+            <div class="interaction-area" style="position: relative; min-height: 200px;">
+                <div class="drag-box" id="dragBox"></div>
+                <p class="instruction">拖动圆形移动</p>
+            </div>
+        </div>
+        
+        <!-- 4. 键盘动画 -->
+        <div class="interactive-card">
+            <h3>键盘动画</h3>
+            <div class="interaction-area">
+                <div class="keyboard-box" id="keyboardBox">按空格</div>
+                <p class="instruction">按空格键触发动画</p>
+            </div>
+        </div>
+        
+        <!-- 5. 渐变背景动画 -->
+        <div class="interactive-card">
+            <h3>渐变背景动画</h3>
+            <div class="interaction-area">
+                <div class="gradient-box"></div>
+                <p class="instruction">悬停查看渐变效果</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 滚动触发动画部分 -->
+    <div style="margin-top: 100px; padding: 20px; background-color: #f8f9fa; border-radius: 8px;">
+        <h2>滚动触发动画</h2>
+        <p>向下滚动页面查看更多内容，元素将在进入视口时显示动画。</p>
+        
+        <!-- 占位元素 -->
+        <div style="height: 600px;"></div>
+        
+        <div class="scroll-animation">这是第一个滚动触发的元素</div>
+        
+        <div style="height: 200px;"></div>
+        
+        <div class="scroll-animation">这是第二个滚动触发的元素</div>
+        
+        <div style="height: 200px;"></div>
+        
+        <div class="scroll-animation">这是第三个滚动触发的元素</div>
+    </div>
+    
+    <script>
+        // 1. 点击动画
+        const clickBox = document.getElementById('clickBox');
+        clickBox.addEventListener('click', function() {
+            this.classList.add('clicked');
+            setTimeout(() => {
+                this.classList.remove('clicked');
+            }, 300);
+        });
+        
+        // 2. 拖动动画
+        const dragBox = document.getElementById('dragBox');
+        let isDragging = false;
+        let offsetX, offsetY;
+        
+        dragBox.addEventListener('mousedown', function(e) {
+            isDragging = true;
+            offsetX = e.clientX - this.getBoundingClientRect().left;
+            offsetY = e.clientY - this.getBoundingClientRect().top;
+            this.style.position = 'absolute';
+        });
+        
+        document.addEventListener('mousemove', function(e) {
+            if (isDragging) {
+                const parent = dragBox.parentElement;
+                const parentRect = parent.getBoundingClientRect();
+                
+                let x = e.clientX - parentRect.left - offsetX;
+                let y = e.clientY - parentRect.top - offsetY;
+                
+                // 限制在父元素内
+                x = Math.max(0, Math.min(x, parentRect.width - dragBox.offsetWidth));
+                y = Math.max(0, Math.min(y, parentRect.height - dragBox.offsetHeight));
+                
+                dragBox.style.left = x + 'px';
+                dragBox.style.top = y + 'px';
+            }
+        });
+        
+        document.addEventListener('mouseup', function() {
+            isDragging = false;
+        });
+        
+        // 3. 键盘动画
+        const keyboardBox = document.getElementById('keyboardBox');
+        document.addEventListener('keydown', function(e) {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                keyboardBox.classList.add('active');
+                setTimeout(() => {
+                    keyboardBox.classList.remove('active');
+                }, 300);
+            }
+        });
+        
+        // 4. 滚动触发动画
+        const scrollElements = document.querySelectorAll('.scroll-animation');
+        
+        function checkScroll() {
+            scrollElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementBottom = element.getBoundingClientRect().bottom;
+                const isVisible = (elementTop < window.innerHeight) && (elementBottom > 0);
+                
+                if (isVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+        
+        // 初始检查
+        checkScroll();
+        
+        // 监听滚动事件
+        window.addEventListener('scroll', checkScroll);
+    </script>
+</body>
+</html>

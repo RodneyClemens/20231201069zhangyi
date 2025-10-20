@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Webpage</title>
+    <link rel="stylesheet" href="{% static 'posts/style.css' %}">
+    <script src="{% static 'posts/script.js' %}"></script>
+    <style>
+        body {
+            padding-bottom: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div id="posts"></div>
+</body>
+</html>

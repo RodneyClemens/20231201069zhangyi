@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目导航</title>
+    <style>
+        /* 基础样式重置 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* 头部样式 */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        
+        header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        /* 主要内容区域 */
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        /* 项目网格容器 */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        /* 项目卡片样式 */
+        .project-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.18);
+        }
+        
+        /* 卡片头部 */
+        .card-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .card-header h2 {
+            font-size: 1.8rem;
+            margin: 0;
+        }
+        
+        /* 卡片内容 */
+        .card-body {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-body p {
+            color: #666;
+            margin-bottom: 1.5rem;
+            flex: 1;
+        }
+        
+        /* 卡片底部 */
+        .card-footer {
+            margin-top: auto;
+        }
+        
+        .project-link {
+            display: inline-block;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            width: 100%;
+        }
+        
+        .project-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        /* 特定项目的颜色主题 */
+        .spa-card .card-header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .spa-card .project-link {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+        }
+        
+        .animations-card .card-header {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+        
+        .animations-card .project-link {
+            background: linear-gradient(45deg, #fa709a, #fee140);
+        }
+        
+        .posts-card .card-header {
+            background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+        }
+        
+        .posts-card .project-link {
+            background: linear-gradient(45deg, #30cfd0, #330867);
+        }
+        
+        .game-card .card-header {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+        }
+        
+        .game-card .project-link {
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .project-card:hover {
+                transform: translateY(-5px);
+            }
+        }
+        
+        /* 页脚样式 */
+        footer {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem;
+            text-align: center;
+            color: #666;
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>项目导航中心</h1>
+        <p>选择您想要访问的应用项目</p>
+    </header>
+    
+    <main>
+        <div class="project-grid">
+            <!-- SPA 应用卡片 -->
+            <div class="project-card spa-card" onclick="window.location.href='/'">
+                <div class="card-header">
+                    <h2>React SPA</h2>
+                </div>
+                <div class="card-body">
+                    <p>单页应用示例，展示React组件的基本使用，包括Props传递和状态管理功能。</p>
+                    <div class="card-footer">
+                        <a href="/" class="project-link">进入应用</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 动画应用卡片 -->
+            <div class="project-card animations-card" onclick="window.location.href='/animations/'">
+                <div class="card-header">
+                    <h2>动画展示</h2>
+                </div>
+                <div class="card-body">
+                    <p>CSS动画和交互效果展示，包含各种现代化的动画效果和交互体验。</p>
+                    <div class="card-footer">
+                        <a href="/animations/" class="project-link">查看动画</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 博客文章卡片 -->
+            <div class="project-card posts-card" onclick="window.location.href='/posts/'">
+                <div class="card-header">
+                    <h2>博客系统</h2>
+                </div>
+                <div class="card-body">
+                    <p>文章发布和管理系统，支持内容展示和浏览功能。</p>
+                    <div class="card-footer">
+                        <a href="/posts/" class="project-link">浏览文章</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 数学游戏卡片 -->
+            <div class="project-card game-card" onclick="window.location.href='/game/'">
+                <div class="card-header">
+                    <h2>数学游戏</h2>
+                </div>
+                <div class="card-body">
+                    <p>数学加法游戏，测试您的计算速度和准确性，达到10分即可获胜。</p>
+                    <div class="card-footer">
+                        <a href="/game/" class="project-link">开始游戏</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 项目导航中心 | 点击卡片或按钮跳转到相应应用</p>
+    </footer>
+    
+    <!-- 添加一些简单的交互效果脚本 -->
+    <script>
+        // 为所有卡片添加点击动画效果
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.98)';
+            });
+            
+            card.addEventListener('mouseup', () => {
+                card.style.transform = '';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = '';
+            });
+        });
+    </script>
+</body>
+</html>
