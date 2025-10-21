@@ -1,0 +1,64 @@
+{% extends "posts/base.html" %}
+{% block title %}{{ title }} - 我的博客{% endblock %}
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h2>{{ title }}</h2>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">保存</button>
+                    <a href="{% if request.resolver_match.url_name == 'post-update' %}{% url 'post-detail' post.pk %}{% else %}{% url 'home' %}{% endif %}" class="btn btn-secondary">取消</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+<script>
+    // 添加表单验证和增强功能
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const titleInput = document.querySelector('#id_title');
+        const contentInput = document.querySelector('#id_content');
+        
+        // 实时字数统计
+        if (contentInput) {
+            contentInput.addEventListener('input', function() {
+                const count = this.value.length;
+                let countElement = document.querySelector('.char-count');
+                if (!countElement) {
+                    countElement = document.createElement('small');
+                    countElement.className = 'char-count text-muted ml-2';
+                    this.parentNode.appendChild(countElement);
+                }
+                countElement.textContent = `${count} 字`;
+            });
+            
+            // 初始字数统计
+            const initialCount = contentInput.value.length;
+            const countElement = document.createElement('small');
+            countElement.className = 'char-count text-muted ml-2';
+            countElement.textContent = `${initialCount} 字`;
+            contentInput.parentNode.appendChild(countElement);
+        }
+        
+        // 表单提交前验证
+        form.addEventListener('submit', function(e) {
+            if (!titleInput.value.trim()) {
+                e.preventDefault();
+                alert('请输入文章标题');
+                titleInput.focus();
+            } else if (!contentInput.value.trim()) {
+                e.preventDefault();
+                alert('请输入文章内容');
+                contentInput.focus();
+            }
+        });
+    });
+</script>
+{% endblock %}

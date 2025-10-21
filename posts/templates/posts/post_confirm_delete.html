@@ -1,0 +1,29 @@
+{% extends "posts/base.html" %}
+{% block title %}删除文章 - 我的博客{% endblock %}
+{% block content %}
+    <div class="card">
+        <div class="card-header">
+            <h2>删除文章</h2>
+        </div>
+        <div class="card-body">
+            <p>您确定要删除文章 "{{ post.title }}" 吗？此操作无法撤销。</p>
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">确认删除</button>
+                <a href="{% url 'post-detail' post.pk %}" class="btn btn-secondary">取消</a>
+            </form>
+        </div>
+    </div>
+    
+    <!-- 文章预览 -->
+    <div class="card mt-4">
+        <div class="card-header bg-warning">
+            <h5 class="text-white">文章预览</h5>
+        </div>
+        <div class="card-body">
+            <h3>{{ post.title }}</h3>
+            <p class="text-muted"><small>作者: {{ post.author.username }} | 发布时间: {{ post.date_posted|date:"Y-m-d H:i" }}</small></p>
+            <p>{{ post.content|truncatewords:50 }}</p>
+        </div>
+    </div>
+{% endblock %}

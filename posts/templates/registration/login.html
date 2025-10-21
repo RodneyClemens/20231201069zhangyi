@@ -1,0 +1,52 @@
+{% extends "posts/base.html" %}
+{% block title %}登录 - 我的博客{% endblock %}
+{% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h2 class="mb-0">用户登录</h2>
+                    </div>
+                    <div class="card-body">
+                        {% if form.errors %}
+                            <div class="alert alert-danger">
+                                <p>您的用户名和密码不匹配。请重试。</p>
+                            </div>
+                        {% endif %}
+
+                        {% if next %}
+                            {% if user.is_authenticated %}
+                                <div class="alert alert-warning">
+                                    <p>您的账户无权访问此页面。请使用有权限的账户登录。</p>
+                                </div>
+                            {% else %}
+                                <div class="alert alert-info">
+                                    <p>请登录以查看此页面。</p>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+
+                        <form method="post" action="{% url 'login' %}">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="id_username" class="form-label">用户名</label>
+                                <input type="text" class="form-control" id="id_username" name="username" required autofocus>
+                            </div>
+                            <div class="mb-3">
+                                <label for="id_password" class="form-label">密码</label>
+                                <input type="password" class="form-control" id="id_password" name="password" required>
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="id_remember" name="remember">
+                                <label class="form-check-label" for="id_remember">记住我</label>
+                            </div>
+                            <input type="hidden" name="next" value="{{ next }}">
+                            <button type="submit" class="btn btn-primary w-100">登录</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

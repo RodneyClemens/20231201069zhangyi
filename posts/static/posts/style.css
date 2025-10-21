@@ -1,48 +1,185 @@
-/* 定义隐藏动画 */
-@keyframes hide {
-    0% {
-        opacity: 1;
-        height: 100%;
-        line-height: 100%;
-        padding: 20px;
-        margin-bottom: 10px;
-    }
-    75% {
-        opacity: 0;
-        height: 100%;
-        line-height: 100%;
-        padding: 20px;
-        margin-bottom: 10px;
-    }
-    100% {
-        opacity: 0;
-        height: 0px;
-        line-height: 0px;
-        padding: 0px;
-        margin-bottom: 0px;
-    }
+/* 全局样式 */
+body {
+    background-color: #f8f9fa;
+    color: #343a40;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* 帖子样式 */
-.post {
-    background-color: #77dd11;
-    padding: 20px;
-    margin-bottom: 10px;
-    animation-name: hide;
-    animation-duration: 2s;
-    animation-fill-mode: forwards;
-    animation-play-state: paused;
-    overflow: hidden;
+/* 卡片动画效果 */
+.card-hover {
+    transition: all 0.3s ease;
+    border-radius: 0.5rem;
 }
 
-/* 隐藏按钮样式 */
-.hide {
-    float: right;
-    background-color: #e74c3c;
-    color: white;
+.card-hover:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* 文章样式 */
+.article-list .card {
     border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 4px;
-    font-size: 14px;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.article-list .card-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: #212529;
+}
+
+.article-list .card-title a {
+    transition: color 0.2s ease;
+}
+
+.article-list .card-title a:hover {
+    color: #007bff;
+}
+
+/* 按钮样式增强 */
+.btn {
+    border-radius: 0.375rem;
+    transition: all 0.2s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+/* 评论区样式 */
+.comment-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.comment-item {
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.comment-item:last-child {
+    border-bottom: none;
+}
+
+/* 标签和分类样式 */
+.badge {
+    font-size: 0.75rem;
+    padding: 0.35em 0.65em;
+    border-radius: 0.375rem;
+    margin-right: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .article-list .card-title {
+        font-size: 1.25rem;
+    }
+    
+    .navbar-brand {
+        font-size: 1.2rem;
+    }
+    
+    /* 移动端搜索框 */
+    .navbar-nav {
+        margin-top: 1rem;
+    }
+    
+    .navbar-nav form {
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+}
+
+/* 加载动画 */
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.loading-spinner {
+    width: 2rem;
+    height: 2rem;
+    border: 0.25rem solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* 文章详情页样式 */
+article h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #212529;
+}
+
+article .card-body {
+    font-size: 1.05rem;
+    line-height: 1.7;
+}
+
+/* 分页样式增强 */
+.pagination {
+    margin-top: 2rem;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.pagination .page-link {
+    color: #007bff;
+    transition: all 0.2s ease;
+}
+
+.pagination .page-link:hover {
+    color: #0056b3;
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+}
+
+/* 表单样式增强 */
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* 消息提示样式 */
+.alert {
+    border-radius: 0.375rem;
+    border: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* 点赞按钮交互 */
+.like-btn {
+    transition: all 0.2s ease;
+}
+
+.like-btn:hover {
+    transform: scale(1.1);
+}
+
+/* 标签输入提示 */
+#id_tags {
+    font-style: italic;
+}
+
+#id_tags:focus {
+    font-style: normal;
 }

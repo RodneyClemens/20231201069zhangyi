@@ -123,3 +123,8 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# 认证相关设置
+LOGIN_REDIRECT_URL = 'home'  # 登录成功后重定向到博客首页
+LOGOUT_REDIRECT_URL = 'home'  # 登出成功后重定向到博客首页
+LOGIN_URL = 'login'  # 登录页面的URL名称

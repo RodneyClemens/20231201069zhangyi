@@ -1,0 +1,76 @@
+{% extends "posts/base.html" %}
+{% block title %}首页 - 我的博客{% endblock %}
+{% block content %}
+    <div class="mb-4">
+        <h1 class="display-4">{% if search_query %}搜索结果: {{ search_query }}{% else %}最新文章{% endif %}</h1>
+    </div>
+    
+    <!-- 文章列表 -->
+    <div class="article-list">
+        {% for post in posts %}
+        <div class="card mb-4 card-hover">
+            <div class="card-body">
+                <div class="mb-2">
+                    {% if post.category %}
+                    <span class="badge bg-primary">{{ post.category }}</span>
+                    {% endif %}
+                </div>
+                <h2 class="card-title"><a href="{% url 'post-detail' post.pk %}" class="text-decoration-none text-dark">{{ post.title }}</a></h2>
+                <p class="card-text text-muted">
+                    <small>作者: <a href="{% url 'user-posts' post.author.username %}" class="text-primary">{{ post.author.username }}</a> | 
+                    发布时间: {{ post.date_posted|date:"Y-m-d H:i" }}</small>
+                </p>
+                <p class="card-text">{{ post.content|truncatewords:30 }}</p>
+                <a href="{% url 'post-detail' post.pk %}" class="btn btn-primary">阅读更多</a>
+                {% if user.is_authenticated and user == post.author %}
+                <a href="{% url 'post-update' post.pk %}" class="btn btn-secondary">编辑</a>
+                <a href="{% url 'post-delete' post.pk %}" class="btn btn-danger">删除</a>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+        <div class="alert alert-info">
+            {% if search_query %}没有找到相关文章{% else %}暂无文章，请稍后再来查看{% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    
+    <!-- 分页控件 -->
+    {% if is_paginated %}
+    <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}">上一页</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">上一页</span>
+            </li>
+            {% endif %}
+            
+            {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+            <li class="page-item active">
+                <span class="page-link">{{ num }} <span class="sr-only">(current)</span></span>
+            </li>
+            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ num }}{% if search_query %}&q={{ search_query }}{% endif %}">{{ num }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+            
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if search_query %}&q={{ search_query }}{% endif %}">下一页</a>
+            </li>
+            {% else %}
+            <li class="page-item disabled">
+                <span class="page-link">下一页</span>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+{% endblock %}
